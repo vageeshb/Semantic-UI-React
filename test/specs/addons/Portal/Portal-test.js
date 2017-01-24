@@ -408,9 +408,9 @@ describe('Portal', () => {
       const trigger = <button>button</button>
       const delay = 100
       wrapperMount(
-        <Portal trigger={trigger} defaultOpen closeOnTriggerMouseLeave
-          closeOnPortalMouseLeave mouseLeaveDelay={delay}
-        ><p>Hi</p></Portal>
+        <Portal trigger={trigger} defaultOpen closeOnTriggerMouseLeave closeOnPortalMouseLeave mouseLeaveDelay={delay}>
+          <p>Hi</p>
+        </Portal>
       )
 
       wrapper.find('button').simulate('mouseleave')
@@ -507,6 +507,69 @@ describe('Portal', () => {
 
       domEvent.click(wrapper.instance().node.firstElementChild.parentNode)
       document.body.childElementCount.should.equal(0)
+    })
+  })
+
+  describe('focus', () => {
+    it('should take focus on first render', (done) => {
+      attachTo = document.createElement('div')
+      document.body.appendChild(attachTo)
+      const opts = { attachTo }
+      const portal = wrapperMount(<Portal defaultOpen><p>Hi</p></Portal>, opts)
+      setTimeout(() => {
+        const portalNode = portal.node.node.firstElementChild
+        expect(document.activeElement).to.equal(portalNode)
+        expect(portalNode.getAttribute('tabindex')).to.equal('-1')
+        expect(portalNode.style.outline).to.equal('none')
+        done()
+      })
+    })
+    it('should not take focus when mounted on portals that closeOnTriggerBlur', (done) => {
+      attachTo = document.createElement('div')
+      document.body.appendChild(attachTo)
+      const opts = { attachTo }
+      const portal = wrapperMount(<Portal defaultOpen closeOnTriggerBlur><p>Hi</p></Portal>, opts)
+      setTimeout(() => {
+        const portalNode = portal.node.node.firstElementChild
+        expect(document.activeElement).to.not.equal(portalNode)
+        expect(portalNode.getAttribute('tabindex')).to.not.equal('-1')
+        expect(portalNode.style.outline).to.not.equal('none')
+        done()
+      })
+    })
+    it('should not take focus on subsequent renders', (done) => {
+      attachTo = document.createElement('div')
+      document.body.appendChild(attachTo)
+      const opts = { attachTo }
+      const portal = wrapperMount(<Portal defaultOpen><input data-focus-me /></Portal>, opts)
+
+      setTimeout(() => {
+        const portalNode = portal.node.node.firstElementChild
+        expect(document.activeElement).to.equal(portalNode)
+
+        const input = document.querySelector('input[data-focus-me]')
+        input.focus()
+        expect(document.activeElement).to.equal(input)
+
+        portal.render()
+        expect(document.activeElement).to.equal(input)
+
+        done()
+      })
+    })
+    it('should restore focus when unmounted', (done) => {
+      const activeElement = document.activeElement
+      attachTo = document.createElement('div')
+      document.body.appendChild(attachTo)
+      const opts = { attachTo }
+      const portal = wrapperMount(<Portal open><p>Hi</p></Portal>, opts)
+      setTimeout(() => {
+        portal.setProps({
+          open: false,
+        })
+        expect(document.activeElement).to.equal(activeElement)
+        done()
+      })
     })
   })
 })

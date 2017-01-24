@@ -1,9 +1,11 @@
+import _ from 'lodash'
 import React from 'react'
 
 import Menu from 'src/collections/Menu/Menu'
 import MenuItem from 'src/collections/Menu/MenuItem'
 import MenuHeader from 'src/collections/Menu/MenuHeader'
 import MenuMenu from 'src/collections/Menu/MenuMenu'
+import { SUI } from 'src/lib'
 import * as common from 'test/specs/commonTests'
 import { sandbox } from 'test/utils'
 
@@ -11,27 +13,30 @@ describe('Menu', () => {
   common.isConformant(Menu)
   common.hasUIClassName(Menu)
   common.hasSubComponents(Menu, [MenuHeader, MenuItem, MenuMenu])
+  common.rendersChildren(Menu)
 
   common.implementsWidthProp(Menu, { propKey: 'widths', canEqual: false })
-  common.propKeyOrValueAndKeyToClassName(Menu, 'attached')
-  common.propKeyOnlyToClassName(Menu, 'borderless')
-  common.propValueOnlyToClassName(Menu, 'color')
-  common.propKeyOnlyToClassName(Menu, 'compact')
+
   common.propKeyAndValueToClassName(Menu, 'fixed')
-  common.propKeyOrValueAndKeyToClassName(Menu, 'floated')
+
+  common.propKeyOnlyToClassName(Menu, 'borderless')
+  common.propKeyOnlyToClassName(Menu, 'compact')
   common.propKeyOnlyToClassName(Menu, 'fluid')
-  common.propKeyOrValueAndKeyToClassName(Menu, 'icon')
   common.propKeyOnlyToClassName(Menu, 'inverted')
   common.propKeyOnlyToClassName(Menu, 'pagination')
   common.propKeyOnlyToClassName(Menu, 'pointing')
   common.propKeyOnlyToClassName(Menu, 'secondary')
   common.propKeyOnlyToClassName(Menu, 'stackable')
-  common.propKeyOrValueAndKeyToClassName(Menu, 'tabular')
   common.propKeyOnlyToClassName(Menu, 'text')
-  common.propValueOnlyToClassName(Menu, 'size')
   common.propKeyOnlyToClassName(Menu, 'vertical')
 
-  common.rendersChildren(Menu)
+  common.propKeyOrValueAndKeyToClassName(Menu, 'attached', ['top', 'bottom'])
+  common.propKeyOrValueAndKeyToClassName(Menu, 'floated', ['right'])
+  common.propKeyOrValueAndKeyToClassName(Menu, 'icon', ['labeled'])
+  common.propKeyOrValueAndKeyToClassName(Menu, 'tabular', ['right'])
+
+  common.propValueOnlyToClassName(Menu, 'color', SUI.COLORS)
+  common.propValueOnlyToClassName(Menu, 'size', _.without(SUI.SIZES, 'medium', 'big'))
 
   it('renders a `div` by default', () => {
     shallow(<Menu />)
@@ -40,8 +45,8 @@ describe('Menu', () => {
 
   describe('activeIndex', () => {
     const items = [
-      { name: 'home' },
-      { name: 'users' },
+      { key: 'home', name: 'home' },
+      { key: 'users', name: 'users' },
     ]
 
     it('is null by default', () => {
@@ -68,8 +73,8 @@ describe('Menu', () => {
   describe('items', () => {
     const spy = sandbox.spy()
     const items = [
-      { name: 'home', onClick: spy, 'data-foo': 'something' },
-      { name: 'users', active: true, 'data-foo': 'something' },
+      { key: 'home', name: 'home', onClick: spy, 'data-foo': 'something' },
+      { key: 'users', name: 'users', active: true, 'data-foo': 'something' },
     ]
     const children = mount(<Menu items={items} />).find('MenuItem')
 
@@ -100,8 +105,8 @@ describe('Menu', () => {
 
   describe('onItemClick', () => {
     const items = [
-      { name: 'home' },
-      { name: 'users' },
+      { key: 'home', name: 'home' },
+      { key: 'users', name: 'users' },
     ]
 
     it('can be omitted', () => {

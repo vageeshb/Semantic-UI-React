@@ -1,10 +1,9 @@
 import { Label } from '../../elements/Label';
-import { SemanticCOLORS, SemanticFLOATS, SemanticSIZES, SemanticWIDTHSNUMBER, SemanticWIDTHSSTRING } from '../..';
+import { SemanticCOLORS, SemanticFLOATS, SemanticSIZES, SemanticWIDTHS } from '../..';
 import * as React from 'react';
 
 
 interface StatisticProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
 
@@ -48,7 +47,6 @@ interface StatisticClass extends React.ComponentClass<StatisticProps> {
 export const Statistic: StatisticClass;
 
 interface StatisticGroupProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
 
@@ -74,13 +72,12 @@ interface StatisticGroupProps {
   size?: SemanticSIZES;
 
   /** A statistic group can have its items divided evenly. */
-  widths?: SemanticWIDTHSSTRING | SemanticWIDTHSNUMBER | number;
+  widths?: SemanticWIDTHS;
 }
 
 export const StatisticGroup: React.ComponentClass<StatisticGroupProps>;
 
 interface StatisticLabelProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
 
@@ -97,7 +94,6 @@ interface StatisticLabelProps {
 export const StatisticLabel: React.ComponentClass<StatisticLabelProps>;
 
 interface StatisticValueProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
 

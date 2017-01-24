@@ -1,21 +1,27 @@
 import * as React from 'react';
-import { FormTextAreaProps } from '../../collections/Form/index';
 
-export interface TextareaProps extends FormTextAreaProps{
-  
+export interface TextAreaProps {
+  [key: string]: any;
+
   /** An element type to render as (string or function). */
   as?: any;
+
+  /** Indicates whether height of the textarea fits the content or not. */
+  autoHeight?: boolean;
 
   /**
    * Called on change.
    * @param {SyntheticEvent} event - The React SyntheticEvent object
    * @param {object} data - All props and the event value.
    */
-  onChange?: (event: React.FormEvent<HTMLTextAreaElement>, value: TextareaOnChangeValue  ) => void;
+  onChange?: (event: React.FormEvent<HTMLTextAreaElement>, data: TextAreaOnChangeData) => void;
+
+  /** The value of the textarea. */
+  value?: string;
 }
 
-interface TextareaOnChangeValue extends TextareaProps{
-  value: any;
+interface TextAreaOnChangeData extends TextAreaProps {
+  value?: string;
 }
 
-export const Textarea: React.ComponentClass<TextareaProps>;
+export const TextArea: React.ComponentClass<TextAreaProps>;

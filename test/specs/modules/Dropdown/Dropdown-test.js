@@ -89,15 +89,16 @@ describe('Dropdown Component', () => {
   // TODO: See Dropdown cx notes
   // common.propKeyOnlyToClassName(Dropdown, 'icon')
   common.propKeyOnlyToClassName(Dropdown, 'labeled')
-  // TODO: See Dropdown cx notes
-  // common.propKeyOnlyToClassName(Dropdown, 'link item')
+  common.propKeyOnlyToClassName(Dropdown, 'item')
   common.propKeyOnlyToClassName(Dropdown, 'multiple')
   common.propKeyOnlyToClassName(Dropdown, 'search')
   common.propKeyOnlyToClassName(Dropdown, 'selection')
   common.propKeyOnlyToClassName(Dropdown, 'simple')
   common.propKeyOnlyToClassName(Dropdown, 'scrolling')
 
-  common.propKeyOrValueAndKeyToClassName(Dropdown, 'pointing')
+  common.propKeyOrValueAndKeyToClassName(Dropdown, 'pointing', [
+    'left', 'right', 'top', 'top left', 'top right', 'bottom', 'bottom left', 'bottom right',
+  ])
 
   it('closes on blur', () => {
     wrapperMount(<Dropdown options={options} />)
@@ -268,15 +269,15 @@ describe('Dropdown Component', () => {
       spy.should.have.been.calledWithMatch(event)
     })
 
-    it('calls selectHighlightedItem', () => {
+    it('calls makeSelectedItemActive', () => {
       wrapperShallow(<Dropdown selectOnBlur />)
 
       const instance = wrapper.instance()
-      sandbox.spy(instance, 'selectHighlightedItem')
+      sandbox.spy(instance, 'makeSelectedItemActive')
 
       wrapper.simulate('blur')
 
-      instance.selectHighlightedItem
+      instance.makeSelectedItemActive
         .should.have.been.calledOnce()
     })
 
@@ -303,19 +304,19 @@ describe('Dropdown Component', () => {
       spy.should.not.have.been.called()
     })
 
-    it('does not call selectHighlightedItem when the mouse is down', () => {
+    it('does not call makeSelectedItemActive when the mouse is down', () => {
       const spy = sandbox.spy()
 
       wrapperShallow(<Dropdown onBlur={spy} selectOnBlur />)
 
       const instance = wrapper.instance()
-      sandbox.spy(instance, 'selectHighlightedItem')
+      sandbox.spy(instance, 'makeSelectedItemActive')
 
       wrapper
         .simulate('mousedown')
         .simulate('blur')
 
-      instance.selectHighlightedItem
+      instance.makeSelectedItemActive
         .should.not.have.been.called()
     })
 

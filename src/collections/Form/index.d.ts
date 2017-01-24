@@ -4,8 +4,7 @@ import {
     ReactFormEvents,
     SemanticFormOnClick,
     SemanticGenericOnClick,
-    SemanticWIDTHSNUMBER,
-    SemanticWIDTHSSTRING
+    SemanticWIDTHS
 } from '../..';
 import * as React from 'react';
 import { InputProps } from '../../elements/Input/index';
@@ -13,7 +12,7 @@ import { DropdownProps } from '../../modules/Dropdown/index';
 
 
 interface FormProps {
-  method?: 'get' | 'post'
+  method?: 'get' | 'post';
 
   /** An element type to render as (string or function). */
   as?: any;
@@ -54,7 +53,7 @@ interface FormProps {
   warning?: boolean;
 
   /** Forms can automatically divide fields to be equal width */
-  widths?: SemanticWIDTHSSTRING | SemanticWIDTHSNUMBER | number | 'equal';
+  widths?: SemanticWIDTHS | 'equal';
 }
 
 interface FormClass extends React.ComponentClass<FormProps> {
@@ -72,7 +71,6 @@ interface FormClass extends React.ComponentClass<FormProps> {
 export const Form: FormClass;
 
 interface FormFieldProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
 
@@ -111,7 +109,7 @@ interface FormFieldProps {
   type?: string;
 
   /** A field can specify its width in grid columns */
-  width?: SemanticWIDTHSSTRING | SemanticWIDTHSNUMBER | number;
+  width?: SemanticWIDTHS;
 }
 
 export const FormField: React.ComponentClass<FormFieldProps>;
@@ -128,7 +126,6 @@ interface FormButtonProps extends ButtonProps {
 export const FormButton: React.ComponentClass<FormButtonProps>;
 
 interface FormCheckboxProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
   control?: any;
@@ -141,7 +138,6 @@ interface FormCheckboxProps {
 export const FormCheckbox: React.ComponentClass<FormCheckboxProps>;
 
 interface FormDropdownProps extends DropdownProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
 
@@ -155,7 +151,6 @@ interface FormDropdownProps extends DropdownProps {
 export const FormDropdown: React.ComponentClass<FormDropdownProps>;
 
 interface FormGroupProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
 
@@ -172,18 +167,17 @@ interface FormGroupProps {
   inline?: boolean;
 
   /** Fields Groups can specify their width in grid columns or automatically divide fields to be equal width */
-  widths?: SemanticWIDTHSSTRING | SemanticWIDTHSNUMBER | number | 'equal';
+  widths?: SemanticWIDTHS | 'equal';
 }
 
 export const FormGroup: React.ComponentClass<FormGroupProps>;
 
-interface FormInputProps extends InputProps, ReactFormEvents<HTMLInputElement>, ReactFocusEvents<HTMLInputElement> {
+interface FormInputProps extends InputProps {
 }
 
 export const FormInput: React.ComponentClass<FormInputProps>;
 
 interface FormRadioProps {
-  
   /** An element type to render as (string or function). */
   as?: any;
   checked?: boolean;
@@ -200,7 +194,6 @@ interface FormRadioProps {
 export const FormRadio: React.ComponentClass<FormRadioProps>;
 
 interface FormSelectProps extends ReactFormEvents<HTMLSelectElement>, ReactFocusEvents<HTMLSelectElement> {
-  
   /** An element type to render as (string or function). */
   as?: any;
 
@@ -219,7 +212,6 @@ interface FormSelectProps extends ReactFormEvents<HTMLSelectElement>, ReactFocus
 export const FormSelect: React.ComponentClass<FormSelectProps>;
 
 export interface FormTextAreaProps extends ReactFormEvents<HTMLTextAreaElement>, ReactFocusEvents<HTMLTextAreaElement> {
-  
   /** An element type to render as (string or function). */
   as?: any;
 
